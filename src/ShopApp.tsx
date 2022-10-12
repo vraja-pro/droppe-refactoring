@@ -1,4 +1,4 @@
-import * as React from "react";
+import {useState} from "react";
 import lodash from 'lodash';
 import Modal from "react-modal";
 import { FaTimes } from "react-icons/fa";
@@ -9,17 +9,23 @@ import logo from "./images/droppe-logo.png";
 import img1 from "./images/img1.png";
 import img2 from "./images/img2.png";
 import styles from "./shopApp.module.css";
+import {PRODUCTS_API} from "./constants"
 
-export class ShopApp extends React.Component {
-  constructor(props: any) {
-    super(props);
+type data = {
+  products: []; 
+  isOpen: boolean; 
+  isShowingMessage: boolean;
+  message:string; 
+  numFavorites: number; 
+  prodCount: number;
+}
 
-    this.favClick = this.favClick.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+ const ShopApp = () => {
 
-    this.state = { products: [], isOpen: false, isShowingMessage: false, message: '', numFavorites: 0, prodCount: 0 };
 
-    fetch('https://fakestoreapi.com/products').then((response) => {
+   const [shopData,setShopData] = useState<data>({ products: [], isOpen: false, isShowingMessage: false, message: '', numFavorites: 0, prodCount: 0 });
+
+    fetch(PRODUCTS_API).then((response) => {
       let jsonResponse = response.json();
 
       jsonResponse.then((rawData) => {
@@ -37,10 +43,11 @@ export class ShopApp extends React.Component {
         })
       });
     });
-  }
+  
 
 
-  favClick(title: string) {
+
+  const favClick = (title: string) => {
     const prods = this.state.products;
     const idx = lodash.findIndex(prods, {title: title})
     let currentFavs = this.state.numFavorites
@@ -54,10 +61,10 @@ export class ShopApp extends React.Component {
       prods[idx].isFavorite = true;
     }
 
-    this.setState(() => ({ products: prods, numFavorites: totalFavs }));
+    setShopData({...shopData, products: prods, numFavorites: totalFavs });
   }
 
-  onSubmit(payload: { title: string; description: string, price: string }) {
+ const onSubmit = (payload: { title: string; description: string, price: string }) => {
     const updated = lodash.clone(this.state.products);
     updated.push({
       title: payload.title,
@@ -65,22 +72,22 @@ export class ShopApp extends React.Component {
       price: payload.price
     });
 
-    this.setState({
+    setShopData({...shopData,
       products: updated,
       prodCount: lodash.size(this.state.products) + 1
     });
 
-    this.setState({
+    setShopData({...shopData,
       isOpen: false,
     });
 
-    this.setState({
+    setShopData({...shopData,
       isShowingMessage: true,
       message: 'Adding product...'
     })
 
     // **this POST request doesn't actually post anything to any database**
-    fetch('https://fakestoreapi.com/products',{
+    fetch(PRODUCTS_API,{
             method:"POST",
             body:JSON.stringify(
                 {
@@ -103,17 +110,17 @@ export class ShopApp extends React.Component {
             })
   }
 
-  render() {
-    const { products, isOpen } = this.state;
+  
+    const { products, isOpen } = shopData;
     return (
-      <React.Fragment>
+      <>
         <div className={styles.header}>
           <div className={['container', styles.headerImageWrapper].join(' ')}>
             <img src={logo} className={styles.headerImage} />
           </div>
         </div>
 
-        <>
+      
            <span
               className={['container', styles.main].join(' ')}
               style={{margin: '50px inherit', display: 'flex', justifyContent: 'space-evenly'}}
@@ -121,7 +128,7 @@ export class ShopApp extends React.Component {
             <img src={img1} style={{maxHeight: "15em", display: 'block'}} />
             <img src={img2} style={{maxHeight: "15rem", display: 'block'}} />
            </span>
-        </>
+      
 
         <div className={['container', styles.main].join(' ')} style={{paddingTop: 0}}>
           <div className={styles.buttonWrapper}>
@@ -165,12 +172,13 @@ export class ShopApp extends React.Component {
                  ><FaTimes /></div>
 
                  <Form
-                    on-submit={this.onSubmit}
+                    on-submit={onSubmit}
                  />
               </div>
            </Modal>
         </>
-      </React.Fragment>
+      </>
     );
-  }
+  
 }
+export default ShopApp;
