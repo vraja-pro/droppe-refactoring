@@ -11,14 +11,22 @@ import img2 from "./images/img2.png";
 import styles from "./shopApp.module.css";
 import {PRODUCTS_API} from "./constants"
 
+type product = {
+  title:string;
+  description:string;
+  price: string;
+}
+
 type data = {
-  products: []; 
+  products: [product]; 
   isOpen: boolean; 
   isShowingMessage: boolean;
   message:string; 
   numFavorites: number; 
   prodCount: number;
 }
+
+ 
 
  const ShopApp = () => {
 
@@ -35,10 +43,10 @@ type data = {
           let updatedProd = rawData[i];
           data.push(updatedProd);
         }
-        this.setState({
-          products: data,
-        });
-        this.setState({
+        // setShopData({...shopData,
+        //   products: data,
+        // });
+        setShopData({...shopData,
           prodCount: data.length
         })
       });
@@ -47,25 +55,25 @@ type data = {
 
 
 
-  const favClick = (title: string) => {
-    const prods = this.state.products;
-    const idx = lodash.findIndex(prods, {title: title})
-    let currentFavs = this.state.numFavorites
-    let totalFavs: any;
+  // const favClick = (title: string) => {
+  //   const prods = shopData.products;
+  //   const idx = lodash.findIndex(prods, {title: title})
+  //   let currentFavs = shopData.numFavorites
+  //   let totalFavs: any;
 
-    if (prods[idx].isFavorite) {
-      prods[idx].isFavorite = false;
-      totalFavs = --currentFavs
-    } else {
-      totalFavs = ++currentFavs
-      prods[idx].isFavorite = true;
-    }
+  //   if (prods[idx].isFavorite) {
+  //     prods[idx].isFavorite = false;
+  //     totalFavs = --currentFavs
+  //   } else {
+  //     totalFavs = ++currentFavs
+  //     prods[idx].isFavorite = true;
+  //   }
 
-    setShopData({...shopData, products: prods, numFavorites: totalFavs });
-  }
+  //   setShopData({...shopData, products: prods, numFavorites: totalFavs });
+  // }
 
  const onSubmit = (payload: { title: string; description: string, price: string }) => {
-    const updated = lodash.clone(this.state.products);
+    const updated = lodash.clone(shopData.products);
     updated.push({
       title: payload.title,
       description: payload.description,
@@ -74,7 +82,7 @@ type data = {
 
     setShopData({...shopData,
       products: updated,
-      prodCount: lodash.size(this.state.products) + 1
+      prodCount: lodash.size(shopData.products) + 1
     });
 
     setShopData({...shopData,
@@ -155,7 +163,7 @@ type data = {
           {products && !!products.length ? <ProductList products={products} onFav={this.favClick} /> : <div></div>}
         </div>
 
-        <>
+      
            <Modal
               isOpen={isOpen}
               className={styles.reactModalContent}
@@ -176,7 +184,7 @@ type data = {
                  />
               </div>
            </Modal>
-        </>
+        
       </>
     );
   
