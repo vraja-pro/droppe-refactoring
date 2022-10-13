@@ -3,9 +3,12 @@ import {product} from '../ShopApp'
 import styles from "./product-list-components.module.css";
 import { FaStar } from "react-icons/fa";
 
+interface Props extends product{
+    onFav:(id:string)=>void;
+}
 
-const Product:FC<product> = ({title,rating,price,description,id,onFav}) => {
-    const {product: productClass, productBody, actionBarItem, actionBarItemLabel,action_bar,isFavorite} = styles
+const Product:FC<Props> = ({title,rating,price,description,id,onFav,isFavorite}) => {
+    const {product: productClass, productBody, actionBarItem, actionBarItemLabel,action_bar} = styles
   return (
     <div className={productClass}>
         <h3>{title}</h3>
@@ -20,17 +23,14 @@ const Product:FC<product> = ({title,rating,price,description,id,onFav}) => {
       {description}
    </p>
 
-    <span className={`${action_bar}`}>
+    <div className={`${action_bar}`}>
       <button
         className={`${actionBarItem} ${isFavorite ? "active" : ""}`}
         role="button"
-        onClick={() => {
-            onFav(id);
-        }}
-      >
+        onClick={() => {onFav(id)}}>
         <FaStar /> <span className={actionBarItemLabel}>{isFavorite ? 'Remove from favorites' : 'Add to favorites'}</span>
       </button>
-    </span>
+    </div>
   
   </div>
   )
