@@ -11,9 +11,11 @@ import axios from "axios";
 
 
 type product = {
+  id:string,
   title:string;
   description:string;
   price: string;
+  isFavorite?:boolean;
 }
 
 type data = {
@@ -27,19 +29,25 @@ type data = {
 
  export const ShopApp = () => {
    const [shopData,setShopData] = useState<data>({products:[], isOpen: false, isShowingMessage: false, message: '', numFavorites: 0, prodCount: 0 });
-
+  const [products,setProducts] = useState<product[]>([])
 
    const getProducts = () => {
-      axios(PRODUCTS_API).then((response=>{
-         setShopData({...shopData,products: response.data})
+      axios(PRODUCTS_API).then(((response)=>{
+        setProducts(response.data)
       })).catch(err=>{
         console.log(err)
       }); 
    }
 
    const favClick = (id:string) => {
-    
-
+    const updatedProducts = products.map((obj:product)=>{
+      if(obj.id == id){
+          return {...obj,isFavorite:!obj.isFavorite};
+      }else{
+        return obj;
+      }
+    })
+    setProducts(updatedProducts)
    }
 
    useEffect(  () => {
