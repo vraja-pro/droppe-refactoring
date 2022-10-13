@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from "react";
-import lodash from 'lodash';
 import Modal from "react-modal";
 import { FaTimes } from "react-icons/fa";
 import { Button } from "./components/button";
-import ProductList from "./components/product-list-components";
 import { Form } from "./components/form";
 import {PRODUCTS_API} from "./constants";
 import Header from './components/Header';
