@@ -1,5 +1,5 @@
 import React,{FC} from 'react'
-import {product} from '../ShopApp'
+import {product} from '../interfaces'
 import styles from "./product-list-components.module.css";
 import { FaStar } from "react-icons/fa";
 
