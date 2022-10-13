@@ -9,31 +9,20 @@ import {PRODUCTS_API} from "./constants";
 import Header from './components/Header';
 import axios from "axios";
 import Product from './components/Product';
+import styles from "./shopApp.module.css";
+import Counters from './components/Counters';
+import {product} from './interfaces'
 
-
-type Rating = {
-  rate:number;
-}
-export interface product {
-  id:string,
-  title:string;
-  description:string;
-  price: string;
-  isFavorite?:boolean;
-  rating?:Rating;
-}
 
 type data = {
-  products: product[]; 
   isOpen: boolean; 
   isShowingMessage: boolean;
   message:string; 
-  numFavorites: number; 
   prodCount: number;
 }
 
  export const ShopApp = () => {
-   const [shopData,setShopData] = useState<data>({products:[], isOpen: false, isShowingMessage: false, message: '', numFavorites: 0, prodCount: 0 });
+   const [shopData,setShopData] = useState<data>({isOpen: false, isShowingMessage: false, message: '', prodCount: 0 });
   const [products,setProducts] = useState<product[]>([])
 
    const getProducts = () => {
@@ -53,7 +42,6 @@ type data = {
       }
     })
     setProducts(updatedProducts)
-    //console.log(updatedProducts)
    }
 
    useEffect(  () => {
@@ -68,7 +56,9 @@ type data = {
          <Header /> 
       
       <div className="container">
-       
+
+        <Counters total={products.length} favorites={products.filter(obj=>obj.isFavorite).length}/>
+     
          {products && products.map((obj)=><Product {...obj} onFav={favClick} key={obj.id}/>)}
          </div>
            
