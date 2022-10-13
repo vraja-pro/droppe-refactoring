@@ -8,14 +8,19 @@ import { Form } from "./components/form";
 import {PRODUCTS_API} from "./constants";
 import Header from './components/Header';
 import axios from "axios";
+import Product from './components/Product';
 
 
-type product = {
+type Rating = {
+  rate:number;
+}
+export interface product {
   id:string,
   title:string;
   description:string;
   price: string;
   isFavorite?:boolean;
+  rating?:Rating;
 }
 
 type data = {
@@ -40,18 +45,19 @@ type data = {
    }
 
    const favClick = (id:string) => {
-    const updatedProducts = products.map((obj:product)=>{
+     const updatedProducts = products.map((obj:product)=>{
       if(obj.id == id){
-          return {...obj,isFavorite:!obj.isFavorite};
+          return {...obj,isFavorite:obj?.isFavorite ? !obj.isFavorite : true};
       }else{
         return obj;
       }
     })
     setProducts(updatedProducts)
+    //console.log(updatedProducts)
    }
 
    useEffect(  () => {
-    getProducts();
+   getProducts();
     
    }, [])
    
@@ -61,10 +67,10 @@ type data = {
       
          <Header /> 
       
-
+      <div className="container">
        
-         {/* {shopData.products &&  <ProductList products={shopData.products} onFav={favClick} /> : <div></div>} */}
-      
+         {products && products.map((obj)=><Product {...obj} onFav={favClick} key={obj.id}/>)}
+         </div>
            
         
       </>
