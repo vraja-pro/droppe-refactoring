@@ -16,11 +16,10 @@ type data = {
   isOpen: boolean; 
   isShowingMessage: boolean;
   message:string; 
-  prodCount: number;
 }
 
  export const ShopApp = () => {
-   const [shopData,setShopData] = useState<data>({isOpen: false, isShowingMessage: false, message: '', prodCount: 0 });
+   const [shopData,setShopData] = useState<data>({isOpen: false, isShowingMessage: false, message: '' });
   const [products,setProducts] = useState<product[]>([])
 
    const getProducts = () => {
@@ -29,6 +28,16 @@ type data = {
       })).catch(err=>{
         console.log(err)
       }); 
+   }
+
+   const handleFormSubmit = (payload: { title: string; description: string, price: string }) =>{
+      //console.log(payload)
+      axios.post(PRODUCTS_API,payload).then(((response)=>{
+        setProducts([{...response.data},...products])
+      })).catch(err=>{
+        console.log(err)
+      }); 
+      setShopData({...shopData,isOpen:false})
    }
 
    const favClick = (id:string) => {
@@ -81,9 +90,9 @@ type data = {
                     onClick={()=>setShopData({...shopData,isOpen:false})}
                  ><FaTimes /></div>
 
-                 {/* <Form
-                    on-submit={this.onSubmit}
-                 /> */}
+                 <Form
+                    on-submit={handleFormSubmit}
+                 />
               </div>
            </Modal>
          </div>
