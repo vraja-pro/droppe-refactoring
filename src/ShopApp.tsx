@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { FaTimes } from "react-icons/fa";
 import { Button } from "./components/button";
 import { Form } from "./components/form";
-import {PRODUCTS_API} from "./constants";
+import {PRODUCTS_API, ADDING_PRODUCT_MSG} from "./constants";
 import Header from './components/Header';
 import axios from "axios";
 import Product from './components/Product';
@@ -13,13 +13,12 @@ import {product} from './interfaces'
 
 
 type data = {
-  isOpen: boolean; 
-  isShowingMessage: boolean;
-  message:string; 
+  isOpen: boolean,
+  isShowingMessage: boolean,
 }
 
  export const ShopApp = () => {
-   const [shopData,setShopData] = useState<data>({isOpen: false, isShowingMessage: false, message: '' });
+   const [shopData,setShopData] = useState<data>({isOpen: false, isShowingMessage: false});
   const [products,setProducts] = useState<product[]>([])
 
    const getProducts = () => {
@@ -31,18 +30,19 @@ type data = {
    }
 
    const handleFormSubmit = (payload: { title: string; description: string, price: string }) =>{
-      //console.log(payload)
+    setShopData({...shopData,isOpen:false,isShowingMessage:true})
       axios.post(PRODUCTS_API,payload).then(((response)=>{
         setProducts([{...response.data},...products])
+        setShopData({...shopData,isOpen:false,isShowingMessage:false})
       })).catch(err=>{
         console.log(err)
       }); 
-      setShopData({...shopData,isOpen:false})
+   
    }
 
    const favClick = (id:string) => {
      const updatedProducts = products.map((obj:product)=>{
-      if(obj.id == id){
+      if(obj.id === id){
           return {...obj,isFavorite:obj?.isFavorite ? !obj.isFavorite : true};
       }else{
         return obj;
@@ -69,7 +69,7 @@ type data = {
                <Button onClick={()=>setShopData({...shopData,isOpen:true})} >Send product proposal</Button>
          
              {shopData.isShowingMessage && <div className={styles.messageContainer}>
-                <i>{shopData.message}</i>
+                <i>{ADDING_PRODUCT_MSG}</i>
              </div>}
           </div>
 
