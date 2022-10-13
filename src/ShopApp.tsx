@@ -57,6 +57,16 @@ type data = {
       
       <div className="container">
 
+      <div className={styles.buttonWrapper}>
+            
+               <Button onClick={()=>setShopData({...shopData,isOpen:true})} >Send product proposal</Button>
+         
+             {shopData.isShowingMessage && <div className={styles.messageContainer}>
+                <i>{shopData.message}</i>
+             </div>}
+          </div>
+
+
         <Counters total={products.length} favorites={products.filter(obj=>obj.isFavorite).length}/>
      
          {products && products.map((obj)=><Product {...obj} onFav={favClick} key={obj.id}/>)}
