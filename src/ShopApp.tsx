@@ -5,7 +5,6 @@ import { Button } from "./components/button";
 import { Form } from "./components/form";
 import {PRODUCTS_API, ADDING_PRODUCT_MSG} from "./constants";
 import Header from './components/Header';
-import axios from "axios";
 import Product from './components/Product';
 import styles from "./shopApp.module.css";
 import Counters from './components/Counters';
@@ -21,23 +20,32 @@ type data = {
    const [shopData,setShopData] = useState<data>({isOpen: false, isShowingMessage: false});
   const [products,setProducts] = useState<product[]>([])
 
-   const getProducts = () => {
-      axios(PRODUCTS_API).then(((response)=>{
-        setProducts(response.data)
-      })).catch(err=>{
+   const getProducts = async () => {
+    try{
+      const response = await fetch(PRODUCTS_API);
+      const data = await response.json();
+      setProducts(data);
+      } catch (err){
         console.log(err)
-      }); 
+      }; 
    }
 
-   const handleFormSubmit = (payload: { title: string; description: string, price: string }) =>{
-    setShopData({...shopData,isOpen:false,isShowingMessage:true})
-      axios.post(PRODUCTS_API,payload).then(((response)=>{
-        setProducts([{...response.data},...products])
-        setShopData({...shopData,isOpen:false,isShowingMessage:false})
-      })).catch(err=>{
-        console.log(err)
-      }); 
-   
+   const handleFormSubmit = async (payload: { title: string; description: string, price: string }) =>{
+        setShopData({...shopData,isOpen:false,isShowingMessage:true})
+        try {
+          const response = await fetch(PRODUCTS_API,{
+              method:"POST",
+              headers:{
+                "Content-Type":"application/json"
+              },
+              body:JSON.stringify(payload)
+          });
+          const newProduct = await response.json();    
+          setProducts([newProduct,...products])
+        } catch (err) {
+          console.log(err);
+        }
+        setShopData({...shopData,isOpen:false,isShowingMessage:false})      
    }
 
    const favClick = (id:string) => {
