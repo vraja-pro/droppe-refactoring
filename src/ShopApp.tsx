@@ -96,7 +96,7 @@ type data = {
                  ><FaTimes /></div>
 
                  <Form
-                    on-submit={handleFormSubmit}
+                    onSubmit={handleFormSubmit}
                  />
               </div>
            </Modal>
