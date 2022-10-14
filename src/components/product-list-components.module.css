@@ -2,12 +2,10 @@
   color: #0f2137;
   background-color: #ffffff;
   border: 1px solid #e3e4e8;
-  padding: 16px 12px 9px;
   border-radius: calc(1.5 * 4px);
   width: 100%;
   height: auto;
   padding: 16px 24px 8px;
-  padding-right: 24px;
   margin: inherit;
 }
 
@@ -32,22 +30,29 @@
   justify-content: flex-start;
   border-top: 1px solid #e3e4ee;
   padding-top: 8px;
+  /* display: table;
+  width: 100%; */
 }
 
-.actionBarItem {
+button.actionBarItem {
   cursor: pointer;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 8px;
+  width:100%;
+  outline: none;
+  border:none;
+  background:none;
+  font-size: 16px;
 }
 
-.actionBarItem:hover {
+button.actionBarItem:hover {
   background-color: #f4f5f9;
 }
 
-.actionBarItem:global(.active) {
+button.actionBarItem:global(.active) {
   color: #62bfad;
 }
 

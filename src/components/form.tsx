@@ -1,4 +1,4 @@
-import * as React from "react";
+import React,{useRef,FC} from "react";
 import { Button } from "./button";
 import styles from "./form.module.css";
 
@@ -6,11 +6,11 @@ type IFormProps = {
   "on-submit": (payload: { title: string; description: string; price: string }) => void;
 }
 
-export const Form: React.FC<IFormProps> = (props) => {
-  let formRef = React.useRef<HTMLFormElement>(null);
-  let titleRef = React.useRef<HTMLInputElement>(null);
-  let priceRef = React.useRef<HTMLInputElement>(null);
-  let descriptionRef = React.useRef<HTMLTextAreaElement>(null);
+export const Form: FC<IFormProps> = (props) => {
+  let formRef = useRef<HTMLFormElement>(null);
+  let titleRef = useRef<HTMLInputElement>(null);
+  let priceRef = useRef<HTMLInputElement>(null);
+  let descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
