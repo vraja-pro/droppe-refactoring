@@ -16,7 +16,7 @@ type data = {
   isShowingMessage: boolean,
 }
 
- export const ShopApp = () => {
+  const ShopApp = () => {
    const [shopData,setShopData] = useState<data>({isOpen: false, isShowingMessage: false});
   const [products,setProducts] = useState<product[]>([])
 
@@ -81,7 +81,7 @@ type data = {
 
         <Counters total={products.length} favorites={products.filter(obj=>obj.isFavorite).length}/>
      
-         {products && products.map((obj)=><Product {...obj} onFav={favClick} key={obj.id}/>)}
+         {products && products.map((obj)=><Product {...obj} onFav={favClick} key={obj.id} />)}
 
 
          <Modal
@@ -107,3 +107,4 @@ type data = {
     );
   
 }
+export default ShopApp
