@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { FaTimes } from "react-icons/fa";
 import { Button } from "./components/button";
 import { Form } from "./components/form";
-import {PRODUCTS_API, ADDING_PRODUCT_MSG} from "./constants";
+import {PRODUCTS_API, ADDING_PRODUCT_MSG,POST_METHOD,HEADERS_JSON} from "./constants";
 import Header from './components/Header';
 import Product from './components/Product';
 import styles from "./shopApp.module.css";
@@ -34,10 +34,8 @@ type data = {
         setShopData({...shopData,isOpen:false,isShowingMessage:true})
         try {
           const response = await fetch(PRODUCTS_API,{
-              method:"POST",
-              headers:{
-                "Content-Type":"application/json"
-              },
+              method:POST_METHOD,
+              headers:HEADERS_JSON,
               body:JSON.stringify(payload)
           });
           const newProduct = await response.json();    
@@ -60,8 +58,7 @@ type data = {
    }
 
    useEffect(  () => {
-   getProducts();
-    
+    getProducts();
    }, [])
    
 
@@ -70,9 +67,9 @@ type data = {
       
          <Header /> 
       
-      <div className="container">
+          <div className="container">
 
-      <div className={styles.buttonWrapper}>
+          <div className={styles.buttonWrapper}>
             
                <Button onClick={()=>setShopData({...shopData,isOpen:true})} >Send product proposal</Button>
          
