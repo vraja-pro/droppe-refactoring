@@ -27,7 +27,7 @@ export const Form: FC<IFormProps> = (props) => {
       return;
     }
 
-    props["on-submit"]({
+    props["onSubmit"]({
       title: titleRef.current && titleRef.current.value,
       description: descriptionRef.current && descriptionRef.current.value,
       price: priceRef.current && priceRef.current.value,
