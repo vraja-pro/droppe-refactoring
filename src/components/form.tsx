@@ -6,7 +6,7 @@ type IFormProps = {
   "onSubmit": (payload: { title: string; description: string; price: string }) => void;
 }
 
-export const Form: FC<IFormProps> = (props) => {
+export const Form: FC<IFormProps> = ({onSubmit}) => {
   let formRef = useRef<HTMLFormElement>(null);
   let titleRef = useRef<HTMLInputElement>(null);
   let priceRef = useRef<HTMLInputElement>(null);
@@ -26,12 +26,11 @@ export const Form: FC<IFormProps> = (props) => {
 
       return;
     }
-
-    props["onSubmit"]({
-      title: titleRef.current && titleRef.current.value,
-      description: descriptionRef.current && descriptionRef.current.value,
-      price: priceRef.current && priceRef.current.value,
-    });
+    // onSubmit({
+    //   title: titleRef.current && titleRef.current.value,
+    //   description: descriptionRef.current && descriptionRef.current.value,
+    //   price: priceRef.current && priceRef.current.value,
+    // });
 
     formRef.current?.reset();
   };
@@ -43,7 +42,6 @@ export const Form: FC<IFormProps> = (props) => {
       <input
         ref={titleRef}
         placeholder="Title..."
-        defaultValue=""
         className={styles.input}
       />
 
@@ -52,14 +50,12 @@ export const Form: FC<IFormProps> = (props) => {
       <input
         ref={priceRef}
         placeholder="Price..."
-        defaultValue=""
         className={styles.input}
       />
 
       <textarea
         ref={descriptionRef}
         placeholder="Start typing product description here..."
-        defaultValue=""
         className={styles.textarea}
       />
 
