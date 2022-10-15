@@ -1,4 +1,4 @@
-import React,{useRef,FC} from "react";
+import React,{FC} from "react";
 import { Button } from "./button";
 import styles from "./form.module.css";
 
@@ -7,40 +7,36 @@ type IFormProps = {
 }
 
 export const Form: FC<IFormProps> = ({onSubmit}) => {
-  let formRef = useRef<HTMLFormElement>(null);
-  let titleRef = useRef<HTMLInputElement>(null);
-  let priceRef = useRef<HTMLInputElement>(null);
-  let descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = (e: any) => {
+    
     e.preventDefault();
-
-    if (!titleRef.current?.value) {
+    if (!e.target.title.value) {
       alert("Your product needs a title");
 
       return;
     }
 
-    if (!descriptionRef.current?.value || !priceRef.current?.value) {
+    if (!e.target.description.value || !e.target.price.value) {
       alert("Your product needs some content");
 
       return;
     }
-    // onSubmit({
-    //   title: titleRef.current && titleRef.current.value,
-    //   description: descriptionRef.current && descriptionRef.current.value,
-    //   price: priceRef.current && priceRef.current.value,
-    // });
+    onSubmit({
+      title: e.target.title.value,
+      description: e.target.description.value,
+      price: e.target.price.value,
+    });
 
-    formRef.current?.reset();
+    e.target.reset();
   };
 
   return (
-    <form className={styles.form} onSubmit={(event) => handleSubmit(event)} ref={formRef}>
+    <form className={styles.form} onSubmit={(event) => handleSubmit(event)}>
       <span className={styles.label}>Product title: *</span>
 
       <input
-        ref={titleRef}
+        name="title"
         placeholder="Title..."
         className={styles.input}
       />
@@ -48,13 +44,13 @@ export const Form: FC<IFormProps> = ({onSubmit}) => {
       <span className={styles.label}>Product details: *</span>
 
       <input
-        ref={priceRef}
+        name="price"
         placeholder="Price..."
         className={styles.input}
       />
 
       <textarea
-        ref={descriptionRef}
+        name="description"
         placeholder="Start typing product description here..."
         className={styles.textarea}
       />
