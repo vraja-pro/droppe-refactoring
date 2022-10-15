@@ -1,13 +1,9 @@
 import React,{FC,FormEvent} from "react";
 import { Button } from "./button";
 import styles from "./form.module.css";
-import {ProductFormElement} from '../interfaces'
+import {ProductFormElement,FormProps} from '../interfaces'
 
-type IFormProps = {
-  "onSubmit": (payload: { title: string; description: string; price: string }) => void;
-}
-
-export const Form: FC<IFormProps> = ({onSubmit}) => {
+export const Form: FC<FormProps> = ({onSubmit}) => {
 
   const handleSubmit = (e:FormEvent<ProductFormElement>) => {
     
@@ -19,7 +15,6 @@ export const Form: FC<IFormProps> = ({onSubmit}) => {
 
     if (!e.currentTarget.elements.description.value || !e.currentTarget.elements.price.value) {
       alert("Your product needs some content");
-
       return;
     }
     onSubmit({
