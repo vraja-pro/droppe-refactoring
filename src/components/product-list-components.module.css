@@ -14,11 +14,9 @@
 }
 
 .product-title {
-  font-size: 4rem;
   font-size: 24px;
   font-weight: 600;
   margin: 0 0 16px;
-  white-space: nowrap;
 }
 
 .productBody {

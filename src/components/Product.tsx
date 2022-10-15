@@ -8,10 +8,10 @@ interface Props extends product{
 }
 
 const Product:FC<Props> = ({title,rating,price,description,id,onFav,isFavorite}) => {
-    const {product: productClass, productBody, actionBarItem, actionBarItemLabel,action_bar} = styles
+    const {product: productClass, productBody, actionBarItem, actionBarItemLabel,action_bar,} = styles
   return (
     <div className={productClass}>
-        <h3>{title}</h3>
+        <h3 className={styles['product-title']}>{title}</h3>
 
     <p><b>Rating: {rating ? `${rating.rate}/5` : ''}</b></p>
 
