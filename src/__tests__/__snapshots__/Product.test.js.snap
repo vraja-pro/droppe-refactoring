@@ -4,7 +4,9 @@ exports[`product card matches snapshot 1`] = `
 <div
   className="product"
 >
-  <h3>
+  <h3
+    className="product-title"
+  >
     product title
   </h3>
   <p>
@@ -35,7 +37,6 @@ exports[`product card matches snapshot 1`] = `
   >
     <button
       className="actionBarItem "
-      data-testid="product-1"
       onClick={[Function]}
     >
       <svg
