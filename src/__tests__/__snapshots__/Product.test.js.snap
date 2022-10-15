@@ -37,7 +37,6 @@ exports[`product card matches snapshot 1`] = `
       className="actionBarItem "
       data-testid="product-1"
       onClick={[Function]}
-      role="button"
     >
       <svg
         fill="currentColor"
