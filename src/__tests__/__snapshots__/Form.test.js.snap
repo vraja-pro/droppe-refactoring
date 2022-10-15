@@ -13,21 +13,25 @@ exports[`form matches snapshot 1`] = `
   </label>
   <input
     className="input"
+    data-testid="title"
     name="title"
     placeholder="Title..."
   />
   <label
     className="label"
+    htmlFor="description"
   >
     Product details: *
   </label>
   <input
     className="input"
+    data-testid="price"
     name="price"
     placeholder="Price..."
   />
   <textarea
     className="textarea"
+    data-testid="description"
     name="description"
     placeholder="Start typing product description here..."
   />
