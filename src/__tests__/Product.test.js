@@ -3,12 +3,6 @@ import {render,screen, cleanup, fireEvent} from '@testing-library/react'
 import Product from '../components/Product';
 import renderer from 'react-test-renderer'
 
-afterEach(()=>{
-    cleanup();
-});
-
-const onFav = jest.fn;
-const productProps = {id:'5',title:'product title', description:'product description',price:'100',isFavorite:false,onFav}
 
 
 test('should render not favorite in Product component', () => { 
@@ -25,7 +19,7 @@ test('should render favorite in Product component', () => {
 })
 
 test('product card matches snapshot', () => { 
-  
+    const productProps = {id:'5',title:'product title', description:'product description',price:'100',isFavorite:false}
     const tree = renderer.create(<Product {...productProps}/>).toJSON();
      expect(tree).toMatchSnapshot();
  })
