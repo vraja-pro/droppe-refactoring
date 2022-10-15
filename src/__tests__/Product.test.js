@@ -34,3 +34,11 @@ test('product card matches snapshot', () => {
      expect(tree).toMatchSnapshot();
  })
 
+test('onFav function working', () => { 
+    const onFav = jest.fn;
+    render(<Product onFav={onFav}/>);
+    const button = screen.getByRole('button');
+     fireEvent.click(button)
+      expect(onFav).toHaveBeenCalled;
+    
+  })
