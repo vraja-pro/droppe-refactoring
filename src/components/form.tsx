@@ -1,10 +1,20 @@
 import React,{FC,FormEvent} from "react";
 import { Button } from "./button";
 import styles from "./form.module.css";
-import {ProductFormElement} from '../interfaces'
+//import {ProductFormElement} from '../interfaces'
 
 type IFormProps = {
   "onSubmit": (payload: { title: string; description: string; price: string }) => void;
+}
+
+export interface FormElements extends HTMLFormControlsCollection {
+  title: HTMLInputElement,
+  description:HTMLInputElement,
+  price:HTMLInputElement,
+}
+
+export interface ProductFormElement extends HTMLFormElement {
+  readonly elements: FormElements
 }
 
 export const Form: FC<IFormProps> = ({onSubmit}) => {
@@ -32,7 +42,7 @@ export const Form: FC<IFormProps> = ({onSubmit}) => {
   };
 
   return (
-    <form className={styles.form} onSubmit={(e:FormEvent<ProductFormElement>) => handleSubmit(e)}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <label className={styles.label}>Product title: *</label>
 
       <input
