@@ -14,7 +14,6 @@ export const Form: FC<IFormProps> = ({onSubmit}) => {
     e.preventDefault();
     if (!e.currentTarget.elements.title.value) {
       alert("Your product needs a title");
-
       return;
     }
 
@@ -34,7 +33,7 @@ export const Form: FC<IFormProps> = ({onSubmit}) => {
 
   return (
     <form className={styles.form} onSubmit={(e:FormEvent<ProductFormElement>) => handleSubmit(e)}>
-      <span className={styles.label}>Product title: *</span>
+      <label className={styles.label}>Product title: *</label>
 
       <input
         name="title"
@@ -42,7 +41,7 @@ export const Form: FC<IFormProps> = ({onSubmit}) => {
         className={styles.input}
       />
 
-      <span className={styles.label}>Product details: *</span>
+      <label className={styles.label}>Product details: *</label>
 
       <input
         name="price"
