@@ -1,65 +1,57 @@
-import React,{useRef,FC} from "react";
+import React,{FC,FormEvent} from "react";
 import { Button } from "./button";
 import styles from "./form.module.css";
+import {ProductFormElement} from '../interfaces'
 
 type IFormProps = {
-  "on-submit": (payload: { title: string; description: string; price: string }) => void;
+  "onSubmit": (payload: { title: string; description: string; price: string }) => void;
 }
 
-export const Form: FC<IFormProps> = (props) => {
-  let formRef = useRef<HTMLFormElement>(null);
-  let titleRef = useRef<HTMLInputElement>(null);
-  let priceRef = useRef<HTMLInputElement>(null);
-  let descriptionRef = useRef<HTMLTextAreaElement>(null);
+export const Form: FC<IFormProps> = ({onSubmit}) => {
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e:FormEvent<ProductFormElement>) => {
+    
     e.preventDefault();
-
-    if (!titleRef.current?.value) {
+    if (!e.currentTarget.elements.title.value) {
       alert("Your product needs a title");
-
       return;
     }
 
-    if (!descriptionRef.current?.value || !priceRef.current?.value) {
+    if (!e.currentTarget.elements.description.value || !e.currentTarget.elements.price.value) {
       alert("Your product needs some content");
 
       return;
     }
-
-    props["on-submit"]({
-      title: titleRef.current && titleRef.current.value,
-      description: descriptionRef.current && descriptionRef.current.value,
-      price: priceRef.current && priceRef.current.value,
+    onSubmit({
+      title: e.currentTarget.elements.title.value,
+      description: e.currentTarget.elements.description.value,
+      price: e.currentTarget.elements.price.value,
     });
 
-    formRef.current?.reset();
+    e.currentTarget.reset();
   };
 
   return (
-    <form className={styles.form} onSubmit={(event) => handleSubmit(event)} ref={formRef}>
-      <span className={styles.label}>Product title: *</span>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <label className={styles.label}>Product title: *</label>
 
       <input
-        ref={titleRef}
+        name="title"
         placeholder="Title..."
-        defaultValue=""
         className={styles.input}
       />
 
-      <span className={styles.label}>Product details: *</span>
+      <label className={styles.label}>Product details: *</label>
 
       <input
-        ref={priceRef}
+        name="price"
         placeholder="Price..."
-        defaultValue=""
         className={styles.input}
       />
 
       <textarea
-        ref={descriptionRef}
+        name="description"
         placeholder="Start typing product description here..."
-        defaultValue=""
         className={styles.textarea}
       />
 
