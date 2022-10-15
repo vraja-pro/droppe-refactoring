@@ -2,26 +2,15 @@
   background: #ffffff;
 }
 
-.logo-img-wrapper {
+.headerImageWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 80px;
 }
 
-.logo-img {
+.headerImage {
   height: 60px;
-}
-
-.header-img{
-  max-height: 15rem;
-  display: block;
-}
-
-.header-img-wrapper{
-  margin: 50px inherit;
-  display: flex; 
-  justify-content: space-evenly;
 }
 
 .main {
