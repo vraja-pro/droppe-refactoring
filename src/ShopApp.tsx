@@ -88,6 +88,7 @@ type data = {
               isOpen={shopData.isOpen}
               className={styles.reactModalContent}
               overlayClassName={styles.reactModalOverlay}
+              ariaHideApp={false}
            >
               <div className={styles.modalContentHelper}>
                  <div

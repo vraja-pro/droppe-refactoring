@@ -27,7 +27,7 @@ export const Form: FC<FormProps> = ({onSubmit}) => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit} data-testid="add-product-form">
       <label className={styles.label}>Product title: *</label>
 
       <input
