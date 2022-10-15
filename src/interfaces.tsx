@@ -19,3 +19,12 @@ export interface FormElements extends HTMLFormControlsCollection {
 export interface ProductFormElement extends HTMLFormElement {
   readonly elements: FormElements
 }
+
+export interface FormProps {
+  "onSubmit": (payload: { title: string; description: string; price: string }) => void;
+}
+
+export interface ButtonProps {
+  children: string;
+  onClick?: () => void;
+}
