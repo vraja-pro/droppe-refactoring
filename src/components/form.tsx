@@ -1,7 +1,7 @@
 import React,{FC,FormEvent} from "react";
 import { Button } from "./button";
 import styles from "./form.module.css";
-import {ProductFormElement,FormElements} from '../interfaces'
+import {ProductFormElement} from '../interfaces'
 
 type IFormProps = {
   "onSubmit": (payload: { title: string; description: string; price: string }) => void;
