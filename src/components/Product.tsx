@@ -26,7 +26,7 @@ const Product:FC<Props> = ({title,rating,price,description,id,onFav,isFavorite})
     <div className={`${action_bar}`}>
       <button
         className={`${actionBarItem} ${isFavorite ? "active" : ""}`}
-        onClick={() => {onFav(id)}}>
+        onClick={() => {onFav(id)}} data-testid={`product-${isFavorite ? '2':'1'}`}>
         <FaStar /> <span className={actionBarItemLabel}>{isFavorite ? 'Remove from favorites' : 'Add to favorites'}</span>
       </button>
     </div>
