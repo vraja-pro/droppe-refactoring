@@ -1,6 +1,7 @@
-import React,{FC} from "react";
+import React,{FC,FormEvent} from "react";
 import { Button } from "./button";
 import styles from "./form.module.css";
+import {ProductFormElement} from '../interfaces'
 
 type IFormProps = {
   "onSubmit": (payload: { title: string; description: string; price: string }) => void;
@@ -8,31 +9,31 @@ type IFormProps = {
 
 export const Form: FC<IFormProps> = ({onSubmit}) => {
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e:FormEvent<ProductFormElement>) => {
     
     e.preventDefault();
-    if (!e.target.title.value) {
+    if (!e.currentTarget.elements.title.value) {
       alert("Your product needs a title");
 
       return;
     }
 
-    if (!e.target.description.value || !e.target.price.value) {
+    if (!e.currentTarget.elements.description.value || !e.currentTarget.elements.price.value) {
       alert("Your product needs some content");
 
       return;
     }
     onSubmit({
-      title: e.target.title.value,
-      description: e.target.description.value,
-      price: e.target.price.value,
+      title: e.currentTarget.elements.title.value,
+      description: e.currentTarget.elements.description.value,
+      price: e.currentTarget.elements.price.value,
     });
 
-    e.target.reset();
+    e.currentTarget.reset();
   };
 
   return (
-    <form className={styles.form} onSubmit={(event) => handleSubmit(event)}>
+    <form className={styles.form} onSubmit={(e:React.FormEvent<HTMLFormElement>) => handleSubmit(e)}>
       <span className={styles.label}>Product title: *</span>
 
       <input
