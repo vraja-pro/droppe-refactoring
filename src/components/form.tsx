@@ -1,7 +1,7 @@
 import React,{FC,FormEvent} from "react";
 import { Button } from "./button";
 import styles from "./form.module.css";
-import {ProductFormElement} from '../interfaces'
+import {ProductFormElement,FormElements} from '../interfaces'
 
 type IFormProps = {
   "onSubmit": (payload: { title: string; description: string; price: string }) => void;
@@ -33,7 +33,7 @@ export const Form: FC<IFormProps> = ({onSubmit}) => {
   };
 
   return (
-    <form className={styles.form} onSubmit={(e:React.FormEvent<HTMLFormElement>) => handleSubmit(e)}>
+    <form className={styles.form} onSubmit={(e:FormEvent<ProductFormElement>) => handleSubmit(e)}>
       <span className={styles.label}>Product title: *</span>
 
       <input
