@@ -32,7 +32,6 @@ export const Form: FC<FormProps> = ({onSubmit}) => {
 
       <input
         name="title"
-        data-testid="title"
         placeholder="Title..."
         className={styles.input}
       />
@@ -40,14 +39,12 @@ export const Form: FC<FormProps> = ({onSubmit}) => {
       <label className={styles.label} htmlFor="description">Product details: *</label>
 
       <input
-        data-testid="price"
         name="price"
         placeholder="Price..."
         className={styles.input}
       />
 
       <textarea
-        data-testid="description"
         name="description"
         placeholder="Start typing product description here..."
         className={styles.textarea}
