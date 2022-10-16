@@ -4,42 +4,51 @@ import {Form} from '../components/form';
 import ShopApp from '../ShopApp';
 import renderer from 'react-test-renderer'
 import user from '@testing-library/user-event'
-
-
-afterEach(()=>{
-    cleanup();
-});
-
-test('form matches snapshot', () => { 
-    const onSubmit = jest.fn;
-   const tree = renderer.create(<Form onSubmit={onSubmit}/>).toJSON();
-    expect(tree).toMatchSnapshot();
- })
-
  
 test('is form being rendered', () => { 
-    const showModal = jest.fn;
+    const mockedShowModal = jest.fn;
     render(<ShopApp />);
     const button = screen.getByText('Send product proposal');
     fireEvent.click(button)
-    expect(showModal).toHaveBeenCalled;
+    expect(mockedShowModal).toHaveBeenCalled;
     const productFormElement = screen.getByTestId('add-product-form');
     expect(productFormElement).toBeInTheDocument();
 })
    
-it('onSubmit is called when all fields pass validation', async () => {
-    const onSubmit = jest.fn;
-    render(<Form onSubmit={onSubmit}/>);
-    const titleTextBox = screen.getByTestId('title');
-    user.type(titleTextBox,"product title");
-    const priceTextBox = screen.getByTestId('price');
-    user.type(priceTextBox,"1000");
-    const descriptionTextBox = screen.getByTestId('description');
-    user.type(descriptionTextBox,"product description");
-    user.click(screen.getByText('Add a product'));
-    expect(onSubmit).toHaveBeenCalled;
-  
-});
+test('form matches snapshot', () => { 
+    const tree = renderer.create(<Form/>).toJSON();
+     expect(tree).toMatchSnapshot();
+  })
+
+describe('form validation', () => { 
+    it('should type in title', () => {
+        render(<Form/>);
+        const inputElement = screen.getByPlaceholderText(/title\.\.\./i)
+        fireEvent.change(inputElement,{target:{value:"radom title"}})
+        expect(inputElement.value).toBe("radom title");
+    });
+
+   
+    
+    it('onSubmit is called when all fields pass validation', async () => {
+        const mockedOnSubmit = jest.fn;
+        render(<Form onSubmit={mockedOnSubmit}/>);
+        const titleTextBox = screen.getByPlaceholderText(/title\.\.\./i);
+        user.type(titleTextBox,"product title");
+        const priceTextBox = screen.getByPlaceholderText(/price\.\.\./i);
+        user.type(priceTextBox,"1000");
+        const descriptionTextBox = screen.getByPlaceholderText(/start typing product description here\.\.\./i);
+        user.type(descriptionTextBox,"product description");
+        const buttonElement = screen.getByRole("button", {name: /Add a product/i})
+        user.click(buttonElement);
+        expect(mockedOnSubmit).toHaveBeenCalled;
+        expect(titleTextBox.value).toBe('')
+        expect(priceTextBox.value).toBe('')
+        expect(descriptionTextBox.value).toBe('')
+    });
+
+
+ })
 
 
 
