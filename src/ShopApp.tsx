@@ -30,7 +30,7 @@ type data = {
       }; 
    }
 
-   const handleFormSubmit = async (payload: { title: string; description: string, price: string }) =>{
+  const handleFormSubmit = async (payload: { title: string; description: string, price: string }) =>{
         setShopData({...shopData,isOpen:false,isShowingMessage:true})
         try {
           const response = await fetch(PRODUCTS_API,{
